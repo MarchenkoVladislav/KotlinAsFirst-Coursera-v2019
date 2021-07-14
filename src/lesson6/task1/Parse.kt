@@ -69,7 +69,53 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val months = listOf(
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря"
+    )
+    val days31 = listOf("января", "марта", "мая", "июля", "августа", "октября", "декабря")
+    val days30 = listOf("апреля", "июня", "сентября", "ноября")
+    val feb = "февраля"
+    val params = str.split(" ")
+    if (params.size < 3
+        || params[1] in days30 && params[0].toInt() > 30
+        || params[1] in days31 && params[0].toInt() > 31
+        || params[1] == feb && ((params[2].toInt() % 4 == 0 && params[2].toInt() % 100 != 0) || params[2].toInt() % 400 == 0) && params[0].toInt() > 29
+        || params[1] == feb && !((params[2].toInt() % 4 == 0 && params[2].toInt() % 100 != 0) || params[2].toInt() % 400 == 0) && params[0].toInt() > 28
+        || params[0].toInt() < 1
+        || months.indexOf(params[1]) < 0
+    ) {
+        return ""
+    } else {
+        var day = ""
+        var mount = ""
+        day = if (params[0].toInt() < 10) {
+            "0${params[0]}"
+        } else {
+            params[0]
+        }
+
+        val num = months.indexOf(params[1]) + 1
+
+        mount = if (num < 10) {
+            "0${num}"
+        } else {
+            num.toString()
+        }
+        return "${day}.${mount}.${params[2]}"
+    }
+}
 
 /**
  * Средняя
@@ -109,7 +155,26 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int  {
+    val norms = listOf("-", "%")
+    val digs = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+    val args = jumps.split(" ")
+    var max = -1
+    for (a in args) {
+        if (a.all { digs.contains(it) }) {
+            if (a.toInt() > max) {
+                max = a.toInt()
+            }
+        } else {
+            if (!norms.contains(a)) {
+                return -1
+            }
+        }
+    }
+
+    return max
+
+}
 
 /**
  * Сложная
@@ -122,7 +187,27 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var max = -1
+
+    val js = jumps.split(" ")
+
+    var i = 0
+
+    val digs = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+    if (js.size < 2) {
+        return -1
+    }
+
+    while (i != js.size) {
+        if (js[i].all { digs.contains(it) } && js[i].toInt() > max && js[i + 1] == "+") {
+            max = js[i].toInt()
+        }
+        i += 2
+    }
+
+    return max
+}
 
 /**
  * Сложная

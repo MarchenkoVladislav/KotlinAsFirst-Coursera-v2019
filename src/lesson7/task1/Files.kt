@@ -53,7 +53,28 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    fun countMatches(string: String, pattern: String): Int {
+        var index = 0
+        var count = 0
+
+        while (true) {
+            index = string.indexOf(pattern, index)
+            index += if (index != -1) {
+                count++
+                1
+            } else {
+                return count
+            }
+        }
+    }
+
+    val res = mutableMapOf<String, Int>()
+    for (ss in substrings) {
+        res[ss] = countMatches(File(inputName).readText().toLowerCase(), ss.toLowerCase())
+    }
+    return res
+}
 
 
 /**
@@ -70,7 +91,85 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    var text = File(inputName).readText()
+
+    text = text
+        .replace("Чя", "Ча", ignoreCase = false)
+        .replace("чя", "ча", ignoreCase = false)
+        .replace("щя", "ща", ignoreCase = false)
+        .replace("Щя", "Ща", ignoreCase = false)
+        .replace("Чю", "Чу", ignoreCase = false)
+        .replace("чю", "чу", ignoreCase = false)
+        .replace("щю", "щу", ignoreCase = false)
+        .replace("Щю", "Щу", ignoreCase = false)
+        .replace("Шы", "Ши", ignoreCase = false)
+        .replace("шы", "ши", ignoreCase = false)
+        .replace("Жы", "Жи", ignoreCase = false)
+        .replace("жы", "жи", ignoreCase = false)
+        .replace("Шя", "Ша", ignoreCase = false)
+        .replace("шя", "ша", ignoreCase = false)
+        .replace("Жя", "Жа", ignoreCase = false)
+        .replace("жя", "жа", ignoreCase = false)
+        .replace("Шю", "Шу", ignoreCase = false)
+        .replace("шю", "шу", ignoreCase = false)
+        .replace("Жю", "Жу", ignoreCase = false)
+        .replace("жю", "жу", ignoreCase = false)
+        .replace("Чы", "Чи", ignoreCase = false)
+        .replace("чы", "чи", ignoreCase = false)
+        .replace("щы", "щи", ignoreCase = false)
+        .replace("Щы", "Щи", ignoreCase = false)
+
+        .replace("ЧЯ", "ЧА", ignoreCase = false)
+        .replace("чЯ", "чА", ignoreCase = false)
+        .replace("щЯ", "щА", ignoreCase = false)
+        .replace("ЩЯ", "ЩА", ignoreCase = false)
+        .replace("ЧЮ", "ЧУ", ignoreCase = false)
+        .replace("чЮ", "чУ", ignoreCase = false)
+        .replace("щЮ", "щУ", ignoreCase = false)
+        .replace("ЩЮ", "ЩУ", ignoreCase = false)
+        .replace("ШЫ", "ШИ", ignoreCase = false)
+        .replace("шЫ", "шИ", ignoreCase = false)
+        .replace("ЖЫ", "ЖИ", ignoreCase = false)
+        .replace("жЫ", "жИ", ignoreCase = false)
+        .replace("ШЯ", "ША", ignoreCase = false)
+        .replace("шЯ", "шА", ignoreCase = false)
+        .replace("ЖЯ", "ЖА", ignoreCase = false)
+        .replace("жЯ", "жА", ignoreCase = false)
+        .replace("ШЮ", "ШУ", ignoreCase = false)
+        .replace("шЮ", "шУ", ignoreCase = false)
+        .replace("ЖЮ", "ЖУ", ignoreCase = false)
+        .replace("жЮ", "жУ", ignoreCase = false)
+        .replace("ЧЫ", "ЧИ", ignoreCase = false)
+        .replace("чЫ", "чИ", ignoreCase = false)
+        .replace("щЫ", "щИ", ignoreCase = false)
+        .replace("ЩЫ", "ЩИ", ignoreCase = false)
+
+        .replace("ЧЯ".toUpperCase(), "ЧА".toUpperCase(), ignoreCase = false)
+        .replace("чЯ".toUpperCase(), "чА".toUpperCase(), ignoreCase = false)
+        .replace("щЯ".toUpperCase(), "щА".toUpperCase(), ignoreCase = false)
+        .replace("ЩЯ".toUpperCase(), "ЩА".toUpperCase(), ignoreCase = false)
+        .replace("ЧЮ".toUpperCase(), "ЧУ".toUpperCase(), ignoreCase = false)
+        .replace("чЮ".toUpperCase(), "чУ".toUpperCase(), ignoreCase = false)
+        .replace("щЮ".toUpperCase(), "щУ".toUpperCase(), ignoreCase = false)
+        .replace("ЩЮ".toUpperCase(), "ЩУ".toUpperCase(), ignoreCase = false)
+        .replace("ШЫ".toUpperCase(), "ШИ".toUpperCase(), ignoreCase = false)
+        .replace("шЫ".toUpperCase(), "шИ".toUpperCase(), ignoreCase = false)
+        .replace("ЖЫ".toUpperCase(), "ЖИ".toUpperCase(), ignoreCase = false)
+        .replace("жЫ".toUpperCase(), "жИ".toUpperCase(), ignoreCase = false)
+        .replace("ШЯ".toUpperCase(), "ША".toUpperCase(), ignoreCase = false)
+        .replace("шЯ".toUpperCase(), "шА".toUpperCase(), ignoreCase = false)
+        .replace("ЖЯ".toUpperCase(), "ЖА".toUpperCase(), ignoreCase = false)
+        .replace("жЯ".toUpperCase(), "жА".toUpperCase(), ignoreCase = false)
+        .replace("ШЮ".toUpperCase(), "ШУ".toUpperCase(), ignoreCase = false)
+        .replace("шЮ".toUpperCase(), "шУ".toUpperCase(), ignoreCase = false)
+        .replace("ЖЮ".toUpperCase(), "ЖУ".toUpperCase(), ignoreCase = false)
+        .replace("жЮ".toUpperCase(), "жУ".toUpperCase(), ignoreCase = false)
+        .replace("ЧЫ".toUpperCase(), "ЧИ".toUpperCase(), ignoreCase = false)
+        .replace("чЫ".toUpperCase(), "чИ".toUpperCase(), ignoreCase = false)
+        .replace("щЫ".toUpperCase(), "щИ".toUpperCase(), ignoreCase = false)
+        .replace("ЩЫ".toUpperCase(), "ЩИ".toUpperCase(), ignoreCase = false)
+
+    File(outputName).writeText(text)
 }
 
 /**
